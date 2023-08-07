@@ -1,9 +1,4 @@
-init: 
-	python -m venv venv 
-	. .\venv\Scripts\activate
-	pip install -r requirements.txt
-
-check: 
+check:
 	flake8 ./
 	pylint ./
 	mypy --strict --explicit-package-bases ./
