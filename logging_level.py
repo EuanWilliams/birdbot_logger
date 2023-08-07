@@ -1,9 +1,9 @@
 import logging
-from enum import Enum
+from enum import IntEnum
 
 
-class LoggingLevel(Enum):
-    """Logging levels. NOT used by logging module."""
+class LoggingLevel(IntEnum):
+    """Logging levels. NOT used by python's logging module, instead used natively"""
 
     DEBUG = 0
     INFO = 1
