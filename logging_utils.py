@@ -42,6 +42,10 @@ class BirdbotLoggerUtils:
         self.birdbot_logger = self._setup_logger()
         self.last_log_message_sent_ts = 0  # In milliseconds
 
+        # If we're testing, disable remote logging
+        if os.getenv("TESTING", None) is not None:
+            self.enable_remote_logging = False
+
     def _setup_logger(self) -> logging.Logger:
         """Configures logger"""
 
