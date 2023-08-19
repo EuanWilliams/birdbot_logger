@@ -1,8 +1,8 @@
 import os
-import sys
 import time
 import logging
 from datetime import datetime
+from typing import Callable
 
 import requests
 from logging_level import LoggingLevel, convert_logging_level
@@ -16,6 +16,7 @@ COLOUR_GREEN = "\x1b[32m"
 COLOUR_YELLOW = "\x1b[33m"
 COLOUR_RED = "\x1b[31m"
 COLOUR_RESET = "\x1b[0m"
+
 
 class BirdbotLoggerUtils:
     def __init__(
@@ -87,13 +88,13 @@ class BirdbotLoggerUtils:
 
         return logging_filename
 
-    def send_log_to_api(self, message: str, error_logger: callable, notice_logger: callable) -> None:
+    def send_log_to_api(self, message: str, error_logger: Callable[[str, bool], None], notice_logger: Callable[[str], None]) -> None:
         """Sends log to API. error_logger is the log_error() function that is passed in to prevent circular imports.
         Same for notice_logger"""
 
         if self.remote_logging_rate_limit > 0:
             if self.last_log_message_sent_ts + self.remote_logging_rate_limit > round(time.time() * 1000):
-                error_logger("Rate limit reached for remote logging", send_to_api=False)
+                error_logger("Rate limit reached for remote logging", False)
                 return
 
         data = {
@@ -107,8 +108,7 @@ class BirdbotLoggerUtils:
         self.last_log_message_sent_ts = round(time.time() * 1000)
 
         if result.status_code != 200:
-            error_logger(f"Failed to send log to API: {result.status_code} - {result.text}", send_to_api=False)
+            error_logger(f"Failed to send log to API: {result.status_code} - {result.text}", False)
             return
 
         notice_logger("Successfully sent log to API")
-

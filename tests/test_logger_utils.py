@@ -4,10 +4,10 @@ from unittest.mock import patch, MagicMock, Mock
 from freezegun import freeze_time
 
 # Mock config file
-sys.modules['config'] = Mock()
+sys.modules["config"] = Mock()
 
-from logging_utils import BirdbotLoggerUtils, COLOUR_GREEN, COLOUR_YELLOW, COLOUR_RESET, COLOUR_RED
-from logging_level import LoggingLevel
+from logging_utils import BirdbotLoggerUtils, COLOUR_GREEN, COLOUR_YELLOW, COLOUR_RESET, COLOUR_RED  # noqa: E402
+from logging_level import LoggingLevel  # noqa: E402
 
 
 class Test(unittest.TestCase):
@@ -80,7 +80,7 @@ class Test(unittest.TestCase):
             },
             timeout=10,
         )
-        log_error.assert_called_once_with("Failed to send log to API: 404 - Not found", send_to_api=False)
+        log_error.assert_called_once_with("Failed to send log to API: 404 - Not found", False)
         log_notice.assert_not_called()
         self.assertEqual(birdbot_logger.last_log_message_sent_ts, 1692403200000)
 
@@ -93,7 +93,7 @@ class Test(unittest.TestCase):
             logging_directory="logs",
             logging_level=logging_level_under_test,
             enable_remote_logging=True,
-            remote_logging_rate_limit=5000, # 500 seconds
+            remote_logging_rate_limit=5000,  # 500 seconds
             logging_api_url="http://test.com",
             device_id="test_device_id",
         )
@@ -131,7 +131,7 @@ class Test(unittest.TestCase):
 
             # Check results
             mock_requests.assert_not_called()
-            log_error.assert_called_once_with("Rate limit reached for remote logging", send_to_api=False)
+            log_error.assert_called_once_with("Rate limit reached for remote logging", False)
             log_notice.assert_not_called()
             self.assertEqual(birdbot_logger.last_log_message_sent_ts, 1692403200000)
 
@@ -284,7 +284,7 @@ class Test(unittest.TestCase):
 
     @freeze_time("2023-08-19 00:00:00")
     @patch("builtins.print")
-    def test_write_to_console_level_info_message_notice(self, mock_print: MagicMock) -> None:
+    def test_write_to_console_level_info_message_warning(self, mock_print: MagicMock) -> None:
         """Test we DO log to console when logging level is INFO, and given log message is WARNING. Additionally
         tests that we colourise the WARNING log correctly."""
 
@@ -419,4 +419,3 @@ class Test(unittest.TestCase):
         )
         birdbot_logger.write_to_console("test", LoggingLevel.ERROR)
         mock_print.assert_called_once_with(f"19-08-2023 00:00:00: ERROR: {COLOUR_RED}test{COLOUR_RESET}")
-
