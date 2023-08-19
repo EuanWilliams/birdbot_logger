@@ -1,12 +1,15 @@
 """Wrapper around logging module to colourise outputs, log to console, file and server. Designed to be implemented as a
 submodule. Main entry point."""
-# TODO: Add tests, this structure makes it quite hard to write tests currently, potentially a refactor is needed to make
-#  it easier to test.
 
+import os
 import logging
 from typing import Any
-from logging_level import LoggingLevel
 from logging_utils import BirdbotLoggerUtils
+
+if os.getenv("STANDALONE", None) is not None:
+    from logging_level import LoggingLevel
+else:
+    from .logging_level import LoggingLevel  # type: ignore[no-redef]
 
 
 birdbot_logger = BirdbotLoggerUtils()
