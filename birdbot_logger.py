@@ -4,12 +4,13 @@ submodule. Main entry point."""
 import os
 import logging
 from typing import Any
-from logging_utils import BirdbotLoggerUtils
 
 if os.getenv("STANDALONE", None) is not None:
     from logging_level import LoggingLevel
+    from logging_utils import BirdbotLoggerUtils
 else:
     from .logging_level import LoggingLevel  # type: ignore[no-redef]
+    from .logging_utils import BirdbotLoggerUtils  # type: ignore[no-redef]
 
 
 birdbot_logger = BirdbotLoggerUtils()
