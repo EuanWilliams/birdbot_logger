@@ -10,7 +10,7 @@ from logging_level import LoggingLevel, convert_logging_level
 # As this is intended to be used as a submodule, the intention is that there is a config.py file in the root dir that
 # contains the configuration values for this module along with other config values, allowing us to configure these in
 # one place.
-from config import LOGGING_LEVEL, LOGGING_DIR, ENABLE_REMOTE_LOGGING, REMOTE_LOGGING_RATE_LIMIT, LOGGING_API_URL, DEVICE_ID
+from config import CONFIGURED_LOGGING_LEVEL, LOGGING_DIRECTORY, ENABLE_REMOTE_LOGGING, REMOTE_LOGGING_RATE_LIMIT, LOGGING_API_URL, DEVICE_ID
 
 COLOUR_GREEN = "\x1b[32m"
 COLOUR_YELLOW = "\x1b[33m"
@@ -21,8 +21,8 @@ COLOUR_RESET = "\x1b[0m"
 class BirdbotLoggerUtils:
     def __init__(
         self,
-        logging_directory: str = LOGGING_DIR,
-        logging_level: LoggingLevel = LOGGING_LEVEL,
+        logging_directory: str = LOGGING_DIRECTORY,
+        logging_level: LoggingLevel = CONFIGURED_LOGGING_LEVEL,
         enable_remote_logging: bool = ENABLE_REMOTE_LOGGING,
         remote_logging_rate_limit: int = REMOTE_LOGGING_RATE_LIMIT,
         logging_api_url: str = LOGGING_API_URL,
