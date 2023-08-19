@@ -65,6 +65,6 @@ def log_error(message: Any, send_to_api: bool = True) -> None:
     try:
         logging.getLogger("birdbot_logger").error(birdbot_logger.format_text(message))
         if send_to_api and birdbot_logger.enable_remote_logging:
-            birdbot_logger.send_log_to_api(message, log_error, log_notice)
+            birdbot_logger.send_log_to_api(message, LoggingLevel.ERROR, log_error, log_notice)
     except Exception as error:
         print(f"Error while logging: {error}")

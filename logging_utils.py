@@ -96,7 +96,7 @@ class BirdbotLoggerUtils:
 
         return logging_filename
 
-    def send_log_to_api(self, message: str, error_logger: Callable[[str, bool], None], notice_logger: Callable[[str], None]) -> None:
+    def send_log_to_api(self, message: str, log_level: LoggingLevel, error_logger: Callable[[str, bool], None], notice_logger: Callable[[str], None]) -> None:
         """Sends log to API. error_logger is the log_error() function that is passed in to prevent circular imports.
         Same for notice_logger"""
 
@@ -109,6 +109,7 @@ class BirdbotLoggerUtils:
             "device_id": self.device_id,
             "log_timestamp": round(time.time() * 1000),
             "log_message": message,
+            "log_level": log_level.name,
         }
         result = requests.post(self.logging_api_url, json=data, timeout=10)
 

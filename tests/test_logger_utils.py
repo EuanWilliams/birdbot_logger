@@ -33,7 +33,7 @@ class Test(unittest.TestCase):
         )
 
         # Run test
-        birdbot_logger.send_log_to_api("test", log_error, log_notice)
+        birdbot_logger.send_log_to_api("test", LoggingLevel.ERROR, log_error, log_notice)
 
         # Check results
         mock_requests.assert_called_once_with(
@@ -42,6 +42,7 @@ class Test(unittest.TestCase):
                 "device_id": "test_device_id",
                 "log_timestamp": 1692403200000,
                 "log_message": "test",
+                "log_level": "ERROR",
             },
             timeout=10,
         )
@@ -70,7 +71,7 @@ class Test(unittest.TestCase):
         )
 
         # Run test
-        birdbot_logger.send_log_to_api("test", log_error, log_notice)
+        birdbot_logger.send_log_to_api("test", LoggingLevel.ERROR, log_error, log_notice)
 
         # Check results
         mock_requests.assert_called_once_with(
@@ -79,6 +80,7 @@ class Test(unittest.TestCase):
                 "device_id": "test_device_id",
                 "log_timestamp": 1692403200000,
                 "log_message": "test",
+                "log_level": "ERROR",
             },
             timeout=10,
         )
@@ -107,7 +109,7 @@ class Test(unittest.TestCase):
             mock_requests.return_value.text = "Success"
 
             # Run test
-            birdbot_logger.send_log_to_api("test", log_error, log_notice)
+            birdbot_logger.send_log_to_api("test", LoggingLevel.ERROR, log_error, log_notice)
 
             # Check results
             mock_requests.assert_called_once_with(
@@ -116,6 +118,7 @@ class Test(unittest.TestCase):
                     "device_id": "test_device_id",
                     "log_timestamp": 1692403200000,
                     "log_message": "test",
+                    "log_level": "ERROR",
                 },
                 timeout=10,
             )
@@ -129,7 +132,7 @@ class Test(unittest.TestCase):
             mock_requests.reset_mock()
 
             # Run test
-            birdbot_logger.send_log_to_api("test", log_error, log_notice)
+            birdbot_logger.send_log_to_api("test", LoggingLevel.ERROR, log_error, log_notice)
 
             # Check results
             mock_requests.assert_not_called()
@@ -158,7 +161,7 @@ class Test(unittest.TestCase):
             mock_requests.return_value.text = "Success"
 
             # Run test
-            birdbot_logger.send_log_to_api("test", log_error, log_notice)
+            birdbot_logger.send_log_to_api("test", LoggingLevel.ERROR, log_error, log_notice)
 
             # Check results
             mock_requests.assert_called_once_with(
@@ -167,6 +170,7 @@ class Test(unittest.TestCase):
                     "device_id": "test_device_id",
                     "log_timestamp": 1692403200000,
                     "log_message": "test",
+                    "log_level": "ERROR",
                 },
                 timeout=10,
             )
@@ -182,7 +186,7 @@ class Test(unittest.TestCase):
             mock_requests.return_value.text = "Success"
 
             # Run test
-            birdbot_logger.send_log_to_api("test", log_error, log_notice)
+            birdbot_logger.send_log_to_api("test", LoggingLevel.ERROR, log_error, log_notice)
 
             # Check results
             mock_requests.assert_called_once_with(
@@ -191,6 +195,7 @@ class Test(unittest.TestCase):
                     "device_id": "test_device_id",
                     "log_timestamp": 1692406800000,
                     "log_message": "test",
+                    "log_level": "ERROR",
                 },
                 timeout=10,
             )
