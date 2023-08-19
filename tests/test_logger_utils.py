@@ -1,3 +1,4 @@
+import os
 import sys
 import unittest
 from unittest.mock import patch, MagicMock, Mock
@@ -5,6 +6,7 @@ from freezegun import freeze_time
 
 # Mock config file
 sys.modules["config"] = Mock()
+os.environ["STANDALONE"] = "True"  # Used to import logging_level.py from logging_utils.py
 
 from logging_utils import BirdbotLoggerUtils, COLOUR_GREEN, COLOUR_YELLOW, COLOUR_RESET, COLOUR_RED  # noqa: E402
 from logging_level import LoggingLevel  # noqa: E402

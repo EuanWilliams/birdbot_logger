@@ -5,7 +5,11 @@ from datetime import datetime
 from typing import Callable
 
 import requests
-from logging_level import LoggingLevel, convert_logging_level
+
+if os.getenv("STANDALONE", None) is not None:
+    from logging_level import LoggingLevel, convert_logging_level
+else:
+    from .logging_level import LoggingLevel, convert_logging_level  # type: ignore[no-redef]
 
 # As this is intended to be used as a submodule, the intention is that there is a config.py file in the root dir that
 # contains the configuration values for this module along with other config values, allowing us to configure these in
