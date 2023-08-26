@@ -27,32 +27,38 @@ def log_debug(message: Any) -> None:
         print(f"Error while logging: {error}")
 
 
-def log_info(message: Any) -> None:
+def log_info(message: Any, send_to_api: bool = False) -> None:
     """Logs information messages"""
 
     birdbot_logger.write_to_console(message, LoggingLevel.INFO)
     try:
         logging.getLogger("birdbot_logger").info(birdbot_logger.format_text(message))
+        if send_to_api and birdbot_logger.enable_remote_logging:
+            birdbot_logger.send_log_to_api(message, LoggingLevel.INFO, log_info, log_notice)
     except Exception as error:
         print(f"Error while logging: {error}")
 
 
-def log_notice(message: Any) -> None:
+def log_notice(message: Any, send_to_api: bool = False) -> None:
     """Logs information messages but in green"""
 
     birdbot_logger.write_to_console(message, LoggingLevel.NOTICE)
     try:
         logging.getLogger("birdbot_logger").info(birdbot_logger.format_text(message))
+        if send_to_api and birdbot_logger.enable_remote_logging:
+            birdbot_logger.send_log_to_api(message, LoggingLevel.NOTICE, log_notice, log_notice)
     except Exception as error:
         print(f"Error while logging: {error}")
 
 
-def log_warning(message: Any) -> None:
+def log_warning(message: Any, send_to_api: bool = False) -> None:
     """Logs warning messages"""
 
     birdbot_logger.write_to_console(message, LoggingLevel.WARNING)
     try:
         logging.getLogger("birdbot_logger").warning(birdbot_logger.format_text(message))
+        if send_to_api and birdbot_logger.enable_remote_logging:
+            birdbot_logger.send_log_to_api(message, LoggingLevel.WARNING, log_warning, log_notice)
     except Exception as error:
         print(f"Error while logging: {error}")
 
