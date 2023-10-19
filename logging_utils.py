@@ -96,11 +96,18 @@ class BirdbotLoggerUtils:
 
         return logging_filename
 
-    def send_log_to_api(self, message: str, log_level: LoggingLevel, error_logger: Callable[[str, bool], None], notice_logger: Callable[[str], None]) -> None:
+    def send_log_to_api(
+        self,
+        message: str,
+        log_level: LoggingLevel,
+        error_logger: Callable[[str, bool], None],
+        notice_logger: Callable[[str], None],
+        override_rate_limit: bool = False,
+    ) -> None:
         """Sends log to API. error_logger is the log_error() function that is passed in to prevent circular imports.
         Same for notice_logger"""
 
-        if self.remote_logging_rate_limit > 0:
+        if self.remote_logging_rate_limit > 0 and not override_rate_limit:
             if self.last_log_message_sent_ts + self.remote_logging_rate_limit > round(time.time() * 1000):
                 error_logger("Rate limit reached for remote logging", False)
                 return
